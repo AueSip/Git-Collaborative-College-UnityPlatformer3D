@@ -3,14 +3,14 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 .utmp/
-Git-Collaborative-College-UnityPlatformer3D/[Ll]ibrary/*
-Git-Collaborative-College-UnityPlatformer3D/[Tt]emp/*
-Git-Collaborative-College-UnityPlatformer3D/[Oo]bj/*
-Git-Collaborative-College-UnityPlatformer3D/[Bb]uild/*
-Git-Collaborative-College-UnityPlatformer3D/[Bb]uilds/*
-Git-Collaborative-College-UnityPlatformer3D/[Ll]ogs/*
-Git-Collaborative-College-UnityPlatformer3D/[Uu]ser[Ss]ettings/*
-Git-Collaborative-College-UnityPlatformer3D/Library/PackageCache/*
+CollaborativePlatformer/[Ll]ibrary/*
+CollaborativePlatformer/[Tt]emp/*
+CollaborativePlatformer/[Oo]bj/*
+CollaborativePlatformer/[Bb]uild/*
+CollaborativePlatformer/[Bb]uilds/*
+CollaborativePlatformer/[Ll]ogs/*
+CollaborativePlatformer/[Uu]ser[Ss]ettings/*
+CollaborativePlatformer/Library/PackageCache/*
 *.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
@@ -19,10 +19,10 @@ Git-Collaborative-College-UnityPlatformer3D/Library/PackageCache/*
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
-/Git-Collaborative-College-UnityPlatformer3D/[Mm]emoryCaptures/
+/CollaborativePlatformer/[Mm]emoryCaptures/
 
 # Recordings can get excessive in size
-/Git-Collaborative-College-UnityPlatformer3D/[Rr]ecordings/
+/CollaborativePlatformer/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -81,20 +81,20 @@ crashlytics-build.properties
 InitTestScene*.unity*
 
 # Addressables default ignores, before user customizations
-/Git-Collaborative-College-UnityPlatformer3D/ServerData
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/StreamingAssets/aa*
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/AddressableAssetsData/link.xml*
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/Addressables_Temp*
+/CollaborativePlatformer/ServerData
+/CollaborativePlatformer/[Aa]ssets/StreamingAssets/aa*
+/CollaborativePlatformer/[Aa]ssets/AddressableAssetsData/link.xml*
+/CollaborativePlatformer/[Aa]ssets/Addressables_Temp*
 # By default, Addressables content builds will generate addressables_content_state.bin
 # files in platform-specific subfolders, for example:
 # /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/AddressableAssetsData/*/*.bin*
+/CollaborativePlatformer/[Aa]ssets/AddressableAssetsData/*/*.bin*
 
 # Visual Scripting auto-generated files
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+/CollaborativePlatformer/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/CollaborativePlatformer/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+/CollaborativePlatformer/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
+/CollaborativePlatformer/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
 
 # Auto-generated scenes by play mode tests
-/Git-Collaborative-College-UnityPlatformer3D/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+/CollaborativePlatformer/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
