@@ -9,11 +9,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
   Vector2 v;
   Vector2 l;
 
+  Vector3 lookRot;
+
   public float SPEED = 600;
   public float LOOKSPEED = 25;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
-  {
+  { 
     Cursor.lockState = CursorLockMode.Locked;
     Cursor.visible = false;
     playerChar = GameObject.Find("Player");
@@ -26,13 +28,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
   void Update()
   {
     Movement(Time.deltaTime);
-    Looking(Time.deltaTime);
+    Looking();
 
   }
 
   void FixedUpdate()
   {
-
+     
   }
 
   void Movement(float deltaT)
@@ -44,15 +46,26 @@ public class NewMonoBehaviourScript : MonoBehaviour
     playerChar.transform.position = playerChar.transform.position + (playerChar.transform.right * (move.x * ReturnSpeed(deltaT)));
   }
   
-  void Looking(float deltaT)
+  void Looking()
     {
-      Vector3 lookRot = new Vector3(0f, 0f, 0f);
-      Vector3 playerRot = new Vector3(0f, 0f, 0f);
-      playerRot.y = l.x;
-      lookRot.x = l.y*-1;
+     
+     
+      lookRot.y += (l.x * LOOKSPEED * Time.deltaTime);
 
-      playerChar.transform.Rotate(playerRot * ReturnLookSpeed(deltaT));  
-      playerCamera.transform.Rotate(lookRot * ReturnLookSpeed(deltaT));
+    lookRot.x += (l.y *-1 * LOOKSPEED * Time.deltaTime);
+    lookRot.x = Mathf.Clamp(lookRot.x, -90f, 90f);
+    playerChar.transform.eulerAngles = new Vector3(
+      playerChar.transform.eulerAngles.x,
+      lookRot.y + 180,
+      playerChar.transform.eulerAngles.z
+    );
+
+    playerCamera.transform.eulerAngles = new Vector3(
+      lookRot.x,
+      playerChar.transform.eulerAngles.y,
+      playerChar.transform.eulerAngles.z
+    );  
+    
     }
 
   float ReturnSpeed(float deltaT)
@@ -60,10 +73,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     return SPEED * deltaT;
   }
     
-  float ReturnLookSpeed(float deltaT)
-    {
-      return LOOKSPEED * deltaT;
-    }
+
  
 
     public void OnInteract()
@@ -84,10 +94,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
   
    public void OnLook(InputValue value)
     {
-        // Read value from control. The type depends on what type of controls.
-        // the action is bound to.
-        l = value.Get<Vector2>();
-        print("Moved");
+    // Read value from control. The type depends on what type of controls.
+    // the action is bound to.
+       l = value.Get<Vector2>();
         // IMPORTANT:
         // The given InputValue is only valid for the duration of the callback. Storing the InputValue references somewhere and calling Get<T>() later does not work correctly.
     }

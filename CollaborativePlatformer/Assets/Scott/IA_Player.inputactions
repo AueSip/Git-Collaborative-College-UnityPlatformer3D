@@ -144,9 +144,9 @@
                 {
                     "name": "2D Vector",
                     "id": "26d3dd39-b929-4cf8-8df4-79c3c0591d64",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "NormalizeVector2",
                     "groups": "",
                     "action": "Look",
                     "isComposite": true,
