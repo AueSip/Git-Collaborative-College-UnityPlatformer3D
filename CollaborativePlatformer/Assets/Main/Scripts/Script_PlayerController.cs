@@ -6,6 +6,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
   GameObject playerChar;
   GameObject playerCamera;
+
+  public Script_Interact InteractComp;
   Vector2 v;
   Vector2 l;
 
@@ -16,10 +18,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   { 
+    playerChar = GameObject.Find("PF_Player");
+    playerCamera = GameObject.Find("PCamera");
     Cursor.lockState = CursorLockMode.Locked;
     Cursor.visible = false;
-    playerChar = GameObject.Find("Player");
-    playerCamera = GameObject.Find("PCamera");
     print(playerChar.name);
     print(playerCamera.name);
     }
@@ -72,13 +74,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
   {
     return SPEED * deltaT;
   }
-    
 
- 
-
-    public void OnInteract()
+  //This grabs the interaction script
+   public void OnInteract(InputValue value)
     {
-       print("Interacted");
+      InteractComp.CallInteract();
     }
 
   // If you are interested in the value from the control that triggers an action, you can declare a parameter of type InputValue.
