@@ -11,6 +11,7 @@ public class Script_Interactable_Base : MonoBehaviour
     void Start()
     {
         gameInstance = FindFirstObjectByType<Script_Game_Manager>();
+        InitialisationOfObject();
     }
 
 
@@ -25,13 +26,18 @@ public class Script_Interactable_Base : MonoBehaviour
         return interactable;
     }
     
-    public virtual void Interacted()
+    public virtual void Interacted(GameObject player)
     {
         
     }
 
     // Update is called once per frame
     void Update()
+    {
+
+    }
+    
+    public virtual void InitialisationOfObject()
     {
         
     }

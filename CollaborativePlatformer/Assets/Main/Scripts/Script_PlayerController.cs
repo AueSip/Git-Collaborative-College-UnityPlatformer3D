@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class Script_PlayerController : MonoBehaviour
 {
 
   GameObject playerChar;
@@ -16,6 +16,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
   public float SPEED = 600;
   public float LOOKSPEED = 25;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+  //Simple inventory where you hold only one item at a time
+  private string inventory_Item;
+
   void Start()
   { 
     playerChar = GameObject.Find("PF_Player");
@@ -76,9 +81,22 @@ public class NewMonoBehaviourScript : MonoBehaviour
   }
 
   //This grabs the interaction script
-   public void OnInteract(InputValue value)
-    {
-      InteractComp.CallInteract();
+  public void OnInteract(InputValue value)
+  {
+    InteractComp.CallInteract(playerChar);
+  }
+    
+
+  //Set the inventory item and get item
+  public string SetInventoryItem(string itemName)
+  {
+    inventory_Item = itemName;
+    return inventory_Item;
+    }
+
+ public string GetInventoryItem()
+  {
+    return inventory_Item;
     }
 
   // If you are interested in the value from the control that triggers an action, you can declare a parameter of type InputValue.
@@ -87,7 +105,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // Read value from control. The type depends on what type of controls.
     // the action is bound to.
     v = value.Get<Vector2>();
-    print("Moved");
     // IMPORTANT:
     // The given InputValue is only valid for the duration of the callback. Storing the InputValue references somewhere and calling Get<T>() later does not work correctly.
   }

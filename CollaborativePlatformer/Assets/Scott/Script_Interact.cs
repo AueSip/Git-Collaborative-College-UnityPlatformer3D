@@ -29,7 +29,6 @@ public class Script_Interact : MonoBehaviour
         {
             if (!Overlaps.Contains(interactable))
             {
-                print("Added" + interactable);
                 Overlaps.Add(interactable);
             }
         }
@@ -42,11 +41,11 @@ public class Script_Interact : MonoBehaviour
         if (interactable != null)
         {
             Overlaps.Remove(interactable);
-            print("Other Removed");
+            
         }
     }
 
-    public void CallInteract()
+    public void CallInteract(GameObject player)
     {
         print("Button Press");
         foreach (Script_Interactable_Base sc in Overlaps)
@@ -54,7 +53,7 @@ public class Script_Interact : MonoBehaviour
             if (sc != null)
             {
                 Script_Interactable_Base obj = sc;
-                obj.Interacted();
+                obj.Interacted(player);
             }
             
         }

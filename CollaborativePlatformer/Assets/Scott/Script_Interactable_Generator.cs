@@ -8,15 +8,16 @@ public class Script_Interactable_Generator : Script_Interactable_Base
     private bool lightv = true;
     public Light lightObj;
 
+    readonly float timeForGreen = 0.75f;
     
-    public override void Interacted()
-    {
+    public override void Interacted(GameObject player)
+    {   
         print("GENINTERACTED");
         if (GetInteractable() == true)
         {
             SetInteractable(false);
             gameInstance.GeneratorReactivated();
-            ToggleLight();
+            ToggleGreenLight();
         };
        
         
@@ -35,11 +36,19 @@ public class Script_Interactable_Generator : Script_Interactable_Base
              lightObj.color = Color.red;
         }
     }
-    
+
     public void DeactivateGenerator()
     {
         SetInteractable(true);
         ToggleLight();
-        
+
+    }
+    
+    public async void ToggleGreenLight()
+    {
+         lightObj.color = Color.green;
+        await Awaitable.WaitForSecondsAsync(timeForGreen);
+        ToggleLight();
+
     }
 }
