@@ -81,9 +81,25 @@ public class Script_NPC : Script_Interactable_Base
         vampireActive = active;
 
     }
-    
+
     public bool GetIsVampireActive()
     {
         return vampireActive;
+    }
+
+    public string GetItemToWant()
+    {
+        return item_to_want;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        print(other);
+        if (other.GetComponentInParent<Script_StakeProjectile>())
+        {
+            Destroy(other);
+            gameInstance.RemoveNPC(this.gameObject);
+        }
+       
     }
 }

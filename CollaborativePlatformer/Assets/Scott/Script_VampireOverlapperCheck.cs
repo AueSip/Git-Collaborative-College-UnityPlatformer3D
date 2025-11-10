@@ -33,10 +33,9 @@ public class Script_VampireOverlapperCheck : MonoBehaviour
         var interactable = other.GetComponentInParent<Script_NPC>();
         if (interactable != null)
         {
-            print("OVERLAPPED A NPCS");
+
             if (!Overlaps.Contains(interactable) && (interactable.GetIsVampireActive()))
             {
-                print("OVERLAPPED A VAMP");
                 Overlaps.Add(interactable);
                 lookingAtVampire = true;
                 music_Manager.StartVampireNear();

@@ -17,7 +17,7 @@ public class Script_PlayerController : MonoBehaviour
   public float LOOKSPEED = 25;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-
+  private Script_UI_Handler ui_Handler;
   //Simple inventory where you hold only one item at a time
   private string inventory_Item;
 
@@ -25,6 +25,7 @@ public class Script_PlayerController : MonoBehaviour
   { 
     playerChar = GameObject.Find("PF_Player");
     playerCamera = GameObject.Find("PCamera");
+    ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
     Cursor.lockState = CursorLockMode.Locked;
     Cursor.visible = false;
     print(playerChar.name);
@@ -91,6 +92,7 @@ public class Script_PlayerController : MonoBehaviour
   public string SetInventoryItem(string itemName)
   {
     inventory_Item = itemName;
+    ui_Handler.SetItemInHand(inventory_Item);
     return inventory_Item;
     }
 

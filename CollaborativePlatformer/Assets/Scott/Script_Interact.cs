@@ -1,15 +1,18 @@
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Script_Interact : MonoBehaviour
-{   
-    
+{
+
+
+    private Script_UI_Handler ui_Handler;
     List<Script_Interactable_Base> Overlaps = new List<Script_Interactable_Base>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
     }
 
     // Update is called once per frame
@@ -22,7 +25,7 @@ public class Script_Interact : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other);
+       
 
         var interactable = other.GetComponentInParent<Script_Interactable_Base>();
         if (interactable != null)
@@ -30,6 +33,12 @@ public class Script_Interact : MonoBehaviour
             if (!Overlaps.Contains(interactable))
             {
                 Overlaps.Add(interactable);
+
+                if (interactable.GetComponent<Script_NPC>() != null && interactable.GetInteractable())
+                {
+                    var str = interactable.GetComponent<Script_NPC>().GetItemToWant();
+                    ui_Handler.SetNPCWant(str);
+                }
             }
         }
 
@@ -41,7 +50,10 @@ public class Script_Interact : MonoBehaviour
         if (interactable != null)
         {
             Overlaps.Remove(interactable);
-            
+            if (interactable.GetComponent<Script_NPC>() != null)
+            {
+                ui_Handler.SetNPCWant("");
+            }
         }
     }
 

@@ -5,6 +5,7 @@ public class Script_Interactable_Object : Script_Interactable_Base
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public string item_to_add;
 
+    private Script_UI_Handler ui_Handler;
     private GameObject interactedPlayer;
     public override void Interacted(GameObject player)
     {
@@ -13,13 +14,14 @@ public class Script_Interactable_Object : Script_Interactable_Base
         {
             print("PICKED UP: " + item_to_add);
             interactedPlayer.GetComponent<Script_PlayerController>().SetInventoryItem(item_to_add);
+           
         }
         
     }
    
     void Start()
     {
-        
+        ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
     }
 
     // Update is called once per frame

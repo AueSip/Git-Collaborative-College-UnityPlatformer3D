@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Script_ShopManager))]
 public class Script_Game_Manager : MonoBehaviour
@@ -8,6 +10,7 @@ public class Script_Game_Manager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject pf_Generator;
 
+    private Script_UI_Handler ui_Handler;
     public GameObject pf_Player;
     public GameObject pf_GasStation;
 
@@ -23,6 +26,10 @@ public class Script_Game_Manager : MonoBehaviour
 
     private Script_ShopManager shop_Manager_System;
 
+    public float vampireCount;
+
+    float currentVampireCount;
+
     private Script_Vampire_Manager vampire_Manager_System;
 
     private Script_Music_Manager player_Music_System;
@@ -37,13 +44,16 @@ public class Script_Game_Manager : MonoBehaviour
 
     int index;
 
+
     void Start()
     {
         shop_Manager_System = GetComponent<Script_ShopManager>();
         vampire_Manager_System = GetComponent<Script_Vampire_Manager>();
-
+        generatorsReactivated = genDeactivatableCount;
         //Finds the music system on the player
         player_Music_System = pf_Player.transform.Find("Script_Music_Manager").GetComponent<Script_Music_Manager>();
+        currentVampireCount = vampireCount;
+        ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
         SpawnGenerators();
         SpawnNPCS();
 
@@ -62,9 +72,10 @@ public class Script_Game_Manager : MonoBehaviour
         float num = Random.Range(powerOutageDelayMin, powerOutageDelayMax);
         await Awaitable.WaitForSecondsAsync(num);
         PowerOutage();
+        
     }
     void SpawnGenerators()
-    {
+    {   
         index = 0;
          pf_GeneratorList = new GameObject[generator_SpawnLocations.Count()];
         foreach (Transform spawn in generator_SpawnLocations)
@@ -86,7 +97,7 @@ public class Script_Game_Manager : MonoBehaviour
         //When Power Is out enables vampires and causes them to spawn around player at random
         powerIsOut = true;
         VampireSpawnLoop();
-       
+
 
         List<int> shuffledIndexes = Enumerable.Range(0, pf_GeneratorList.Length).OrderBy(x => Random.value).ToList();
          print("LIGHTS OUT");
@@ -102,7 +113,8 @@ public class Script_Game_Manager : MonoBehaviour
         ;
 
         pf_GasStation.GetComponent<Script_GasStationStatus>().ToggleLight(false);
-
+        ui_Handler.SetCountForText(generatorsReactivated, genDeactivatableCount, ui_Handler.GetGeneratorText());
+        pf_Player.transform.GetComponent<Script_Attack>().DisableStake();
 
         //Debug
         print("Gens Deactivated: " + generatorsDeactivated);
@@ -112,10 +124,10 @@ public class Script_Game_Manager : MonoBehaviour
 
     //Event to occur when deactivated gen is interacted with
     public void GeneratorReactivated()
-    {
+    {   
         generatorsDeactivated--;
         generatorsReactivated++;
-
+        ui_Handler.SetCountForText(generatorsReactivated, genDeactivatableCount, ui_Handler.GetGeneratorText());
         if (generatorsReactivated == genDeactivatableCount)
         {
             PowerActive();
@@ -124,8 +136,8 @@ public class Script_Game_Manager : MonoBehaviour
 
     //Starts the game with the gas station active and initiates the timer until outage
     public void PowerActive()
-    {   
-         
+    {
+        ui_Handler.SetCountForText(generatorsReactivated, genDeactivatableCount, ui_Handler.GetGeneratorText());
         powerIsOut = false;
         pf_GasStation.GetComponent<Script_GasStationStatus>().ToggleLight(true);
         InitTest();
@@ -133,6 +145,8 @@ public class Script_Game_Manager : MonoBehaviour
 
         //plays the gas station music
         player_Music_System.StartGasStationTracks();
+
+        pf_Player.transform.GetComponent<Script_Attack>().EnableStake();
     }
 
     //Updates the location of the npcs 
@@ -166,18 +180,39 @@ public class Script_Game_Manager : MonoBehaviour
             indx++;
 
         }
+        
         List<int> shuffledIndexes = Enumerable.Range(0, spawnedNPCS.Count).OrderBy(x => Random.value).ToList();
-        for (int dex = 0; dex < 3; dex++)
+        for (int dex = 0; dex < vampireCount; dex++)
         {
             spawnedNPCS[shuffledIndexes[dex]].GetComponent<Script_NPC>().SetIsVampire(true);
+
         }
+        
+        ui_Handler.SetCountForText(vampireCount, vampireCount, ui_Handler.GetVampireCount());
         
 
     }
 
     public void RemoveNPC(GameObject npc)
-    {
-        spawnedNPCS.Remove(npc);
+    {   
+        npc.GetComponent<Collider>().enabled = false;
+        print("REMOVINGGGGGS");
+        print(npc);
+        if (npc.GetComponent<Script_NPC>().GetIsVampire())
+        {
+            currentVampireCount--;
+            spawnedNPCS.Remove(npc);
+            ui_Handler.SetCountForText(currentVampireCount, vampireCount, ui_Handler.GetVampireCount());
+            Destroy(npc);
+            print("REMOVED VAMPS");
+             UpdateShopManager();
+        }
+        else if(!npc.GetComponent<Script_NPC>().GetIsVampire())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            print("YOU KILLED CIVI");
+        }
+        
     }
 
   
@@ -200,7 +235,7 @@ public class Script_Game_Manager : MonoBehaviour
 
 
     }
-    
+
     public async void VampireSpawnLoop()
     {
         await Awaitable.WaitForSecondsAsync(Random.Range(vampireSpawnWait_Min, vampireSpawnWait_Max));
@@ -209,9 +244,10 @@ public class Script_Game_Manager : MonoBehaviour
             GetAndSpawnVampire();
             VampireSpawnLoop();
         }
-        
 
     }
+    
+    
 
 
     
