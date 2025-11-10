@@ -6,11 +6,13 @@ public class Script_PlayerFlashlight : MonoBehaviour
 {
     GameObject flashlight;
 
+
     bool enabledVal = true;
     Light lightVal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public AudioSource newAudio;
     void Start()
-    {
+    {   
         flashlight = GameObject.Find("FLight");
         lightVal = flashlight.GetComponent<Light>();
     }
@@ -28,7 +30,7 @@ public class Script_PlayerFlashlight : MonoBehaviour
 
         enabledVal = !enabledVal;
         // IMPORTANT:
-
+        newAudio.Play();
         lightVal.enabled = enabledVal;
         
         // The given InputValue is only valid for the duration of the callback. Storing the InputValue references somewhere and calling Get<T>() later does not work correctly.
