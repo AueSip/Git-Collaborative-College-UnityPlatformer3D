@@ -8,6 +8,8 @@ public class Script_VampireOverlapperCheck : MonoBehaviour
     bool lookingAtVampire;
 
     public float aggroTime = 0f;
+
+    public Script_Music_Manager music_Manager;
     
     Awaitable waitingTime;
     List<Script_NPC> Overlaps = new();
@@ -37,6 +39,7 @@ public class Script_VampireOverlapperCheck : MonoBehaviour
                 print("OVERLAPPED A VAMP");
                 Overlaps.Add(interactable);
                 lookingAtVampire = true;
+                music_Manager.StartVampireNear();
                 TimeUntilDeath();
             }
         }
@@ -53,13 +56,15 @@ public class Script_VampireOverlapperCheck : MonoBehaviour
             {
                 lookingAtVampire = false;
                 waitingTime.Cancel();
+                music_Manager.StopVampireAggro();
+
             }
             Overlaps.Remove(interactable);
         }
     }
 
     public async void TimeUntilDeath()
-    {   
+    {
         waitingTime =  Awaitable.WaitForSecondsAsync(aggroTime);
         await waitingTime;
         CallDeath();

@@ -9,6 +9,9 @@ public class Script_Interactable_Generator : Script_Interactable_Base
     public Light lightObj;
 
     readonly float timeForGreen = 0.75f;
+
+    public AudioSource sound_Generator_Activated;
+    public AudioSource sound_Generator_Enabled;
     
     public override void Interacted(GameObject player)
     {   
@@ -17,6 +20,7 @@ public class Script_Interactable_Generator : Script_Interactable_Base
         {
             SetInteractable(false);
             gameInstance.GeneratorReactivated();
+            
             ToggleGreenLight();
         };
        
@@ -30,10 +34,12 @@ public class Script_Interactable_Generator : Script_Interactable_Base
         if (lightv)
         {
             lightObj.color = Color.white;
+            sound_Generator_Enabled.Play();
         }
         if (!lightv)
         {
-             lightObj.color = Color.red;
+            lightObj.color = Color.red;
+            sound_Generator_Enabled.Stop();
         }
     }
 
@@ -46,7 +52,8 @@ public class Script_Interactable_Generator : Script_Interactable_Base
     
     public async void ToggleGreenLight()
     {
-         lightObj.color = Color.green;
+        lightObj.color = Color.green;
+        sound_Generator_Activated.Play();
         await Awaitable.WaitForSecondsAsync(timeForGreen);
         ToggleLight();
 

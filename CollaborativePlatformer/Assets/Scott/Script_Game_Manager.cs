@@ -24,6 +24,8 @@ public class Script_Game_Manager : MonoBehaviour
     private Script_ShopManager shop_Manager_System;
 
     private Script_Vampire_Manager vampire_Manager_System;
+
+    private Script_Music_Manager player_Music_System;
     int generatorsDeactivated;
 
     private bool powerIsOut;
@@ -39,6 +41,9 @@ public class Script_Game_Manager : MonoBehaviour
     {
         shop_Manager_System = GetComponent<Script_ShopManager>();
         vampire_Manager_System = GetComponent<Script_Vampire_Manager>();
+
+        //Finds the music system on the player
+        player_Music_System = pf_Player.transform.Find("Script_Music_Manager").GetComponent<Script_Music_Manager>();
         SpawnGenerators();
         SpawnNPCS();
 
@@ -81,7 +86,7 @@ public class Script_Game_Manager : MonoBehaviour
         //When Power Is out enables vampires and causes them to spawn around player at random
         powerIsOut = true;
         VampireSpawnLoop();
-
+       
 
         List<int> shuffledIndexes = Enumerable.Range(0, pf_GeneratorList.Length).OrderBy(x => Random.value).ToList();
          print("LIGHTS OUT");
@@ -101,6 +106,7 @@ public class Script_Game_Manager : MonoBehaviour
 
         //Debug
         print("Gens Deactivated: " + generatorsDeactivated);
+         player_Music_System.StartNightTimeTrack();
     }
 
 
@@ -118,11 +124,15 @@ public class Script_Game_Manager : MonoBehaviour
 
     //Starts the game with the gas station active and initiates the timer until outage
     public void PowerActive()
-    {
+    {   
+         
         powerIsOut = false;
         pf_GasStation.GetComponent<Script_GasStationStatus>().ToggleLight(true);
         InitTest();
         UpdateShopManager();
+
+        //plays the gas station music
+        player_Music_System.StartGasStationTracks();
     }
 
     //Updates the location of the npcs 
