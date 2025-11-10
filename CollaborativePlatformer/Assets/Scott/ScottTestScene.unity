@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 021ac156240d7c6478fcc8e5b7ea8755, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -7394,11 +7394,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985512719}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!82 &994409222 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8673158378744636119, guid: 99a856e44c7684b4a9fbe74868f64f1f, type: 3}
-  m_PrefabInstance: {fileID: 2080041955}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994626443
 GameObject:
   m_ObjectHideFlags: 0
@@ -14707,7 +14702,7 @@ PrefabInstance:
     - target: {fileID: 6140511741179561484, guid: 99a856e44c7684b4a9fbe74868f64f1f, type: 3}
       propertyPath: newAudio
       value: 
-      objectReference: {fileID: 994409222}
+      objectReference: {fileID: 0}
     - target: {fileID: 7200013047698491016, guid: 99a856e44c7684b4a9fbe74868f64f1f, type: 3}
       propertyPath: field of view
       value: 80

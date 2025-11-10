@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_GasStationStatus : MonoBehaviour
 {
 
-    public Light light_GasStation;
+    public List<Light> light_GasStation;
     public bool powered;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,12 +22,19 @@ public class Script_GasStationStatus : MonoBehaviour
     {   ;
         powered = Value;
         if (powered)
-        {
-            light_GasStation.color = Color.white;
+        {   
+            foreach (Light light in light_GasStation)
+            {
+                light.color = Color.white;
+            }
+            
         }
         if (!powered)
         {
-             light_GasStation.color = Color.red;
+           foreach (Light light in light_GasStation)
+            {
+                light.color = Color.red;
+            }
         }    
     }
 }   
