@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,9 +43,15 @@ public class Script_Game_Manager : MonoBehaviour
 
     int index;
 
+    float npc_TimerVal;
+
+    public float start_NpcTimerVal;
+
+    public float npc_AddTimerVal;
+
 
     void Start()
-    {
+    {   
         shop_Manager_System = GetComponent<Script_ShopManager>();
         vampire_Manager_System = GetComponent<Script_Vampire_Manager>();
         generatorsReactivated = genDeactivatableCount;
@@ -54,6 +59,7 @@ public class Script_Game_Manager : MonoBehaviour
         player_Music_System = pf_Player.transform.Find("Script_Music_Manager").GetComponent<Script_Music_Manager>();
         currentVampireCount = vampireCount;
         ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
+        npc_TimerVal = start_NpcTimerVal;
         SpawnGenerators();
         SpawnNPCS();
 
@@ -137,6 +143,7 @@ public class Script_Game_Manager : MonoBehaviour
     //Starts the game with the gas station active and initiates the timer until outage
     public void PowerActive()
     {
+        NPC_Timer();
         ui_Handler.SetCountForText(generatorsReactivated, genDeactivatableCount, ui_Handler.GetGeneratorText());
         powerIsOut = false;
         pf_GasStation.GetComponent<Script_GasStationStatus>().ToggleLight(true);
@@ -154,6 +161,7 @@ public class Script_Game_Manager : MonoBehaviour
     {
         HideNPCPositions();
         spawnedNPCS = shop_Manager_System.UpdateNPCPositions(spawnedNPCS);
+        NPCAddTimerVal();
     }
 
     public void HideNPCPositions()
@@ -245,6 +253,29 @@ public class Script_Game_Manager : MonoBehaviour
             VampireSpawnLoop();
         }
 
+    }
+
+    //Handles npc unhappyness when power is on
+    public async void NPC_Timer()
+    {
+        await Awaitable.WaitForSecondsAsync(1f);
+        if (!powerIsOut)
+        {
+            npc_TimerVal--;
+            ui_Handler.SetNPCTimerTime(npc_TimerVal);
+            NPC_Timer();
+        }
+
+        if (npc_TimerVal <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+    }
+
+    public void NPCAddTimerVal()
+    {
+        npc_TimerVal += npc_AddTimerVal;
     }
     
     

@@ -1,4 +1,3 @@
-using UnityEditor.UI;
 using UnityEngine;
 
 public class Script_StakeProjectile : MonoBehaviour
@@ -16,6 +15,14 @@ public class Script_StakeProjectile : MonoBehaviour
     void Update()
     {
         transform.position += transform.forward * SPEED * Time.deltaTime;
+    }
+
+    public void Disable()
+    {
+        GetComponent<CapsuleCollider>().enabled = false;
+        GetComponent<CapsuleCollider>().isTrigger = false;
+        this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+        Destroy(this.gameObject, 2);
     }
 
 }

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Script_Interact : MonoBehaviour
 {

@@ -9,8 +9,6 @@ public class Script_UI_Handler : MonoBehaviour
 {
     public Image SliderBar;
 
-    private float sliderSize;
-    private float sliderMinSize;
 
     private float currentFlashlightPercent;
 
@@ -18,6 +16,7 @@ public class Script_UI_Handler : MonoBehaviour
 
     public TextMeshProUGUI vampireCount;
 
+    public TextMeshProUGUI npcHappieness;
     public TextMeshProUGUI npcWants;
 
     public TextMeshProUGUI itemInHand;
@@ -37,7 +36,6 @@ public class Script_UI_Handler : MonoBehaviour
     public void SetSliderPercentage(float flashlightPercent)
     {
         currentFlashlightPercent = flashlightPercent;
-        float minSize = 0;
         SliderBar.rectTransform.sizeDelta = new Vector2(ogSize * currentFlashlightPercent, SliderBar.rectTransform.sizeDelta[1]);
         print("NEW SIZE: " + SliderBar.rectTransform.sizeDelta);
     }
@@ -62,9 +60,14 @@ public class Script_UI_Handler : MonoBehaviour
         npcWants.text = textotuse;
     }
 
-     public void SetItemInHand(string textotuse)
+    public void SetItemInHand(string textotuse)
     {
         itemInHand.text = textotuse;
+    }
+    
+    public void SetNPCTimerTime(float value)
+    {
+        npcHappieness.text = value.ToString();
     }
 
 }

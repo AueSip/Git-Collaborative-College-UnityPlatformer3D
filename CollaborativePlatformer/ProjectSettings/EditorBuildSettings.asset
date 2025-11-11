@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Main/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scott/ScottWorldLevelTest.unity
+    guid: 01b770f493c71a844ae9601986e302fa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2183e3a824572134ea34ecd73125b1a9, type: 3}
   m_UseUCBPForAssetBundles: 0

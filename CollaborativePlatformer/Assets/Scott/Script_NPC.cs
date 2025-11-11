@@ -97,7 +97,7 @@ public class Script_NPC : Script_Interactable_Base
         print(other);
         if (other.GetComponentInParent<Script_StakeProjectile>())
         {
-            Destroy(other);
+            other.GetComponentInParent<Script_StakeProjectile>().Disable();
             gameInstance.RemoveNPC(this.gameObject);
         }
        
