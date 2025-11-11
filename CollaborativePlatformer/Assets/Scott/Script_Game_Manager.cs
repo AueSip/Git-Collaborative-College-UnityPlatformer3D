@@ -45,13 +45,14 @@ public class Script_Game_Manager : MonoBehaviour
 
     float npc_TimerVal;
 
-    public float start_NpcTimerVal;
+    public float start_NpcTimerVal = 30;
 
     public float npc_AddTimerVal;
 
 
     void Start()
-    {   
+    {      
+        npc_TimerVal = start_NpcTimerVal;
         shop_Manager_System = GetComponent<Script_ShopManager>();
         vampire_Manager_System = GetComponent<Script_Vampire_Manager>();
         generatorsReactivated = genDeactivatableCount;
@@ -59,7 +60,6 @@ public class Script_Game_Manager : MonoBehaviour
         player_Music_System = pf_Player.transform.Find("Script_Music_Manager").GetComponent<Script_Music_Manager>();
         currentVampireCount = vampireCount;
         ui_Handler = GameObject.Find("Canvas").GetComponent<Script_UI_Handler>();
-        npc_TimerVal = start_NpcTimerVal;
         SpawnGenerators();
         SpawnNPCS();
 
@@ -203,11 +203,12 @@ public class Script_Game_Manager : MonoBehaviour
 
     public void RemoveNPC(GameObject npc)
     {   
-        npc.GetComponent<Collider>().enabled = false;
+        
         print("REMOVINGGGGGS");
         print(npc);
         if (npc.GetComponent<Script_NPC>().GetIsVampire())
-        {
+        {   
+            npc.GetComponent<Collider>().enabled = false;
             currentVampireCount--;
             spawnedNPCS.Remove(npc);
             ui_Handler.SetCountForText(currentVampireCount, vampireCount, ui_Handler.GetVampireCount());
@@ -216,7 +217,8 @@ public class Script_Game_Manager : MonoBehaviour
              UpdateShopManager();
         }
         else if(!npc.GetComponent<Script_NPC>().GetIsVampire())
-        {
+        {   
+            npc.GetComponent<Collider>().enabled = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             print("YOU KILLED CIVI");
         }
@@ -262,14 +264,20 @@ public class Script_Game_Manager : MonoBehaviour
         if (!powerIsOut)
         {
             npc_TimerVal--;
+            print(npc_TimerVal);
             ui_Handler.SetNPCTimerTime(npc_TimerVal);
-            NPC_Timer();
+            if (npc_TimerVal <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            else
+            {
+            NPC_Timer(); 
+            }
+           
         }
 
-        if (npc_TimerVal <= 0)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        
         
     }
 

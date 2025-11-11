@@ -42,7 +42,18 @@ public class Script_Vampire_Manager : MonoBehaviour
     {
         Vector3 pos = VampireSpawns[Random.Range(0, VampireSpawns.Count)].transform.position;
         vampire.transform.SetPositionAndRotation(pos, transform.rotation);
-        vampire.transform.LookAt(player.transform, Vector3.right);
+        Transform temp = player.transform;
+        Quaternion rotDir = Quaternion.Euler(
+            player.transform.eulerAngles.x,
+            player.transform.eulerAngles.y + 90f,
+            player.transform.eulerAngles.z
+        );
+        temp.SetPositionAndRotation(player.transform.position, rotDir);
+        vampire.transform.LookAt(temp, Vector3.up);
+        vampire.transform.rotation = Quaternion.Euler(
+            vampire.transform.eulerAngles.x,
+            vampire.transform.eulerAngles.y + 90f,
+            vampire.transform.eulerAngles.z);
         vampire.GetComponent<Script_NPC>().SetVampireActive(true);
     }
 

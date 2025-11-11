@@ -3,7 +3,8 @@ using UnityEngine;
 public class Script_StakeProjectile : MonoBehaviour
 {
 
-   
+
+    private bool inUse = true;
     public float SPEED = 5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,8 +22,13 @@ public class Script_StakeProjectile : MonoBehaviour
     {
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<CapsuleCollider>().isTrigger = false;
+        inUse = false;
         this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-        Destroy(this.gameObject, 2);
+    }
+
+    public bool GetActive()
+    {
+        return inUse;
     }
 
 }

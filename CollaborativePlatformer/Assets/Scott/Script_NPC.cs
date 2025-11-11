@@ -6,6 +6,7 @@ public class Script_NPC : Script_Interactable_Base
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     string item_to_want;
 
+    private Script_NPC_Audio npc_Audio;
     bool vampireActive;
     public string item_to_give;
     public List<string> itemList = new List<string>(){"femboymilk", "biscuit", "pill"};
@@ -18,10 +19,11 @@ public class Script_NPC : Script_Interactable_Base
         if (GetInteractable())
         {
             if (interactedPlayer.GetComponent<Script_PlayerController>().GetInventoryItem() == item_to_want)
-            {
+            {   
                 interactedPlayer.GetComponent<Script_PlayerController>().SetInventoryItem("");
                 //disables itneractivity after being interacted with
                 UpdateItemToWant();
+                npc_Audio.PlayFinishedList();
                 gameInstance.UpdateShopManager();
 
 
@@ -40,7 +42,9 @@ public class Script_NPC : Script_Interactable_Base
     public override void InitialisationOfObject()
     {
         base.InitialisationOfObject();
+        npc_Audio = GameObject.FindFirstObjectByType<Script_NPC_Audio>();
         UpdateItemToWant();
+
     }
        
    
@@ -93,13 +97,22 @@ public class Script_NPC : Script_Interactable_Base
     }
 
     void OnTriggerEnter(Collider other)
-    {
-        print(other);
-        if (other.GetComponentInParent<Script_StakeProjectile>())
+    {   
+        if (other.GetComponentInParent<Script_StakeProjectile>() == null)
         {
+            return;
+        }
+        print(other);
+        if (other.GetComponentInParent<Script_StakeProjectile>().GetActive())
+        {       
             other.GetComponentInParent<Script_StakeProjectile>().Disable();
             gameInstance.RemoveNPC(this.gameObject);
         }
-       
+
+    }
+    
+    public void PlayAppearAtTill()
+    {
+        npc_Audio.WaitToPlayRequest(npc_Audio.PlayAppearList(), item_to_want, itemList);
     }
 }

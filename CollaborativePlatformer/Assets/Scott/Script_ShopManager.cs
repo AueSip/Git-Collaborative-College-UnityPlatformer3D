@@ -29,15 +29,22 @@ public class Script_ShopManager : MonoBehaviour
         {
             pf_NPCS[i].transform.SetPositionAndRotation(npc_GasStationLocations[i].position, npc_GasStationLocations[i].rotation);
             pf_NPCS[i].GetComponent<Script_NPC>().SetInteractable(false);
-        };
+        }
+        ;
         pf_NPCS[0].GetComponent<Script_NPC>().SetInteractable(true);
+        AppearAtTillDelay(pf_NPCS[0]);
 
-        foreach(GameObject npc in pf_NPCS)
+        foreach (GameObject npc in pf_NPCS)
         {
-             npc.GetComponent<Script_NPC>().SetVampireActive(false);
+            npc.GetComponent<Script_NPC>().SetVampireActive(false);
         }
         return pf_NPCS;
     }
     
-
+    //DEBUG TESTINGS
+    public async void AppearAtTillDelay(GameObject npc)
+    {
+        await Awaitable.WaitForSecondsAsync(3f);
+        npc.GetComponent<Script_NPC>().PlayAppearAtTill();
+    }
 }   

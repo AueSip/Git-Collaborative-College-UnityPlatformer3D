@@ -37,6 +37,10 @@ public class Script_Interact : MonoBehaviour
                     var str = interactable.GetComponent<Script_NPC>().GetItemToWant();
                     ui_Handler.SetNPCWant(str);
                 }
+                /*if (interactable.GetComponent<Script_NPC>() != null)
+                {
+                    ui_Handler.SetNPCWant(interactable.GetComponent<Script_NPC>().GetIsVampire().ToString());
+               } */
             }
         }
 

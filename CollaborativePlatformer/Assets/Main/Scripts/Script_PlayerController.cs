@@ -34,7 +34,8 @@ public class Script_PlayerController : MonoBehaviour
 
   // Update is called once per frame
   void Update()
-  {
+  { 
+     l = Mouse.current.delta.ReadValue();
     Movement(Time.deltaTime);
     Looking();
 
@@ -55,26 +56,18 @@ public class Script_PlayerController : MonoBehaviour
   }
   
   void Looking()
-    {
-     
-     
-      lookRot.y += (l.x * LOOKSPEED * Time.deltaTime);
+{
+    // Mouse input accumulates rotation
+    lookRot.y += l.x * LOOKSPEED;  // Yaw
+    lookRot.x -= l.y * LOOKSPEED; // Pitch inverted
 
-    lookRot.x += (l.y *-1 * LOOKSPEED * Time.deltaTime);
+    // Clamp vertical rotation
     lookRot.x = Mathf.Clamp(lookRot.x, -90f, 90f);
-    playerChar.transform.eulerAngles = new Vector3(
-      playerChar.transform.eulerAngles.x,
-      lookRot.y + 180,
-      playerChar.transform.eulerAngles.z
-    );
 
-    playerCamera.transform.eulerAngles = new Vector3(
-      lookRot.x,
-      playerChar.transform.eulerAngles.y,
-      playerChar.transform.eulerAngles.z
-    );  
-    
-    }
+    // Apply rotation
+    playerChar.transform.rotation = Quaternion.Euler(0f, lookRot.y, 0f);
+    playerCamera.transform.localRotation = Quaternion.Euler(lookRot.x, 0f, 0f);
+}
 
   float ReturnSpeed(float deltaT)
   {
@@ -111,14 +104,6 @@ public class Script_PlayerController : MonoBehaviour
     // The given InputValue is only valid for the duration of the callback. Storing the InputValue references somewhere and calling Get<T>() later does not work correctly.
   }
   
-   public void OnLook(InputValue value)
-    {
-    // Read value from control. The type depends on what type of controls.
-    // the action is bound to.
-       l = value.Get<Vector2>();
-        // IMPORTANT:
-        // The given InputValue is only valid for the duration of the callback. Storing the InputValue references somewhere and calling Get<T>() later does not work correctly.
-    }
 }
 
 
